@@ -259,18 +259,22 @@ def followercount(names):
     for name in names:
         try:
             user = api.get_user(name)
-            ageTwitterAccount = user.created_at
-            followers_count =  user.followers_count
-            friends_count = user.friends_count
+            # ageTwitterAccount = user.created_at
+            try:
+                followers_count =  user.followers_count
+            except:
+                time.sleep(60*15)
+                followers_count = user.followers_count
+                # friends_count = user.friends_count
             timezone = user.time_zone
             print(name)
             print(ageTwitterAccount)
             print(followers_count)
             print(friends_count)
             print(timezone)
-            return followers_count, friends_count
+            return followers_count
         except:
-            return 0,0
+            return 0
 
 
 followerlist = []
