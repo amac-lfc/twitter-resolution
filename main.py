@@ -151,7 +151,8 @@ plt.grid(axis= 'y', alpha = 0.75)
 plt.xlabel('State')
 plt.ylabel('frequency')
 plt.xticks(np.arange(0, 51, step = 1))
-plt.show()
+plt.title("Tweet Frequency by State")
+# plt.show()
 
 #divde the data by gender
 arrW = np.zeros(51, dtype = int) #for women
@@ -163,8 +164,8 @@ for i in range(0, len(data)-1):
     if data.gender[i] == 1:
         x = data.tweet_state[i]
         arrM[x] = arrM[x] + 1
-print("w =", arrW)
-print("m =", arrM)
+# print("w =", arrW)
+# print("m =", arrM)
 width = 0.5
 ind = np.arange(51)
 p1 = plt.bar(ind, arrM, width)
@@ -174,7 +175,7 @@ plt.xlabel('State')
 plt.xticks(np.arange(0, 51, step = 1))
 plt.legend((p1[0], p2[0]), ('Men', 'Women'))
 plt.title("Tweet Frequency by State and Gender")
-plt.show()
+# plt.show()
 
 # stacked bar plot for category
 HF = np.zeros(51, dtype = int) #for 'Health & Fitness'
@@ -220,7 +221,7 @@ for i in range(0, len(data)-1):
     if data.Resolution_Category[i] == 9:
         x = data.tweet_state[i]
         TM[x] = TM[x] + 1
-print("HF =", HF)
+# print("HF =", HF)
 # print("m =", arrM)
 width = 0.5
 ind = np.arange(51)
@@ -240,7 +241,54 @@ plt.xlabel('State')
 plt.xticks(np.arange(0, 51, step = 1))
 plt.legend((p0[0],p1[0],p2[0],p3[0],p4[0],p5[0],p6[0],p7[0],p8[0], p9[0]), ('Health & Fitness', 'Humor', 'Personal Growth', 'Philanthropic', 'Recreation & Leisure', 'Career','Family/Friends/Relationships', 'Finance', 'Education/Training', 'Time Management/Organization' ), bbox_to_anchor=(1.05, 1), loc = 'upper left', borderaxespad = 0.)
 plt.title("Tweet Frequency by State and Category")
-plt.show()
+# plt.show()
+
+## here you are adding the number of followers to the excel
+CONSUMER_KEY = 'n4qNDyH25RLTRW1wLlKa4lLU6'
+CONSUMER_SECRET = 'OIN2Vi1Wdq8mP8QLFaiN6sGvc2LeVHLdJMECVEiyrUk9j8z9zD'
+ACCESS_TOKEN = '1171636288086315009-3uesxkcQ5TKbijuUaITb05yOr8fu51'
+ACCESS_TOKEN_SECRET = 'aY654202Zk9LCJ01x9zcTfqarMpbybp5we5cbKUDZQxEG'
+auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
+
+api = tweepy.API(auth)
+
+names = ["Reesesking1","Stacyloohoo"]
+
+def followercount(names):
+    for name in names:
+        try:
+            user = api.get_user(name)
+            ageTwitterAccount = user.created_at
+            followers_count =  user.followers_count
+            friends_count = user.friends_count
+            timezone = user.time_zone
+            print(name)
+            print(ageTwitterAccount)
+            print(followers_count)
+            print(friends_count)
+            print(timezone)
+            return followers_count, friends_count
+        except:
+            return 0,0
+
+
+followerlist = []
+friendlist = []
+name = []
+
+for i in range(0, len(data)-1):
+    name.append(data.name[i + 1])
+(', '.join('"' + i + '"' for i in name))
+# print(name)
+
+for i in range(0, len(name)-1):
+    followers, friends = followercount(name)
+    followerlist.append(followers)
+    friendlist.append(friends)
+# error: it says that the user is not found -- maybe they
+# deleted their account? what do I do now
+
 
 
 #trying to do a plot with a table connected to the bottom
@@ -248,7 +296,7 @@ plt.show()
 categories = [HF, H, PG, P, RL, C, FF, F, ET, TM]
 # states = categories.transpose()
 print("HF=",HF)
-print("new=",categories[1,])
+# print("new=",categories[1,])
 columns = ('AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY')
 rows = ('HF', 'H', 'PG', 'P', 'RL', 'C', 'FF', 'F', 'ET', 'TM')
 
