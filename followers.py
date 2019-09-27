@@ -1,6 +1,6 @@
 import csv
-from example import *
 import time
+import tweepy
 import pandas as pd
 
 data = pd.read_csv("dfe.csv",encoding = "ISO-8859-1")
@@ -15,40 +15,42 @@ auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 api = tweepy.API(auth, wait_on_rate_limit = True, wait_on_rate_limit_notify = True)
 
 
-
-def followercount(names):
-    for name in names:
-        try:
-            user = api.get_user(name)
-        except:
-            return 0
-        # ageTwitterAccount = user.created_at
-        followers_count =  user.followers_count
-        timezone = user.time_zone
-        print(name)
-        print(ageTwitterAccount)
-        print(followers_count)
-        print(friends_count)
-        print(timezone)
-        return followers_count
+def followercount(name):
+    try:
+        user = api.get_user(name)
+        # print(user)
+    except:
+        return 0,0
+    ageTwitterAccount = user.created_at
+    followers_count =  user.followers_count
+    # timezone = user.time_zone
+    # print(name)
+    # print(ageTwitterAccount)
+    # print(followers_count)
+    # print(friends_count)
+    # print(timezone)
+    return followers_count, ageTwitterAccount
 
 
 followerlist = []
-name = []
+years = []
+# names = ['Steven_Baucom']
+names = []
 
+for i in range(len(data.name)-1):
+    names.append(data.name[i + 1])
+# (', '.join('"' + i + '"' for i in name))
+print(names)
 
-for i in range(0, 5):
-    name.append(data.name[i + 1])
-(', '.join('"' + i + '"' for i in name))
-# print(name)
-
-for i in range(0, len(name)):
-    followers = followercount(name)
+for i in range(len(names)):
+    print(names[i])
+    followers, year = followercount(names[i])
     followerlist.append(followers)
+    years.append(year)
 
 with open('followers.csv', 'w') as csvfile:
     filewriter = csv.writer(csvfile, delimiter=',',
                             quotechar='|', quoting=csv.QUOTE_MINIMAL)
-    filewriter.writerow(['Name', 'followers'])
-    for i in range(len(name)):
-        filewriter.writerow([name[i], followerlist[i]])
+    filewriter.writerow(['Name', 'followers', "created in"])
+    for i in range(len(names)):
+        filewriter.writerow([names[i], followerlist[i], years[i]])
