@@ -184,6 +184,11 @@ plt.xlabel('State')
 plt.ylabel('frequency')
 plt.xticks(np.arange(0, 51, step = 1))
 plt.title("Tweet Frequency by State")
+labels = ['AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN',
+            'IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','NE','NV','NH',
+            'NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI', 'SC','SD','TN','TX',
+            'UT','VT', 'VA','WA','WV','WI','WY','DC']
+plt.xticks(np.arange(0, 51, step = 1), labels)
 plt.show()
 #
 # #divde the data by gender
