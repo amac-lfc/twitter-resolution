@@ -8,22 +8,21 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score
 import matplotlib.pyplot as plt
 import warnings
+from sklearn.linear_model import LogisticRegression
 warnings.filterwarnings("ignore")
 # equivalents from matplotlib
 # data = pd.read_csv("dfe.csv",encoding = "ISO-8859-1")
 # print(data[data.columns[1]])
 data = pd.read_excel('dfe2.xlsx')
-print("column headings:")
-print(data.columns.values)
+# print("column headings:")
+# print(data.columns.values)
 
-followdata = pd.read_csv("followers.csv", encoding = "ISO-8859-1")
+followdata = pd.read_csv("followers.csv")
 data = data.join(followdata)
 print(followdata.columns.values)
 print("data = ", data.columns.values)
 
-states = [] # this is a matrix of the strings
-for i in range(0, len(data)-1):
-     states.append(data.tweet_state[i+1])
+
 
 # code the state strings into integers
 data.tweet_state[data.tweet_state == 'AL'] = 0
@@ -96,16 +95,18 @@ data.tweet_region[data.tweet_region == 'Midwest'] = 3
 # chi square test
 # PCA test
 # reading about decision trees
-
-arrayX = np.zeros([len(data), 2])
-for i in range(0, len(data)-1):
+print("len=", len(data))
+print("followers=",data.followers)
+arrayX = np.zeros([len(data), 3],'i')
+for i in range(0, len(data)-2):
     arrayX[i, 0] = data.gender[i+1]
     arrayX[i, 1] = data.tweet_state[i+1]
+    arrayX[i, 2] = int(data.followers[i+1])
     # arrayX[i, 2] = data.tweet_region[i]
 
-print("gender, state \n", arrayX)
+print("gender, state, followers \n", arrayX)
 
-arrayY = np.zeros([len(data), 1])
+arrayY = np.zeros([len(data), 1], 'i')
 
 for i in range(0, len(data)-1):
      if data['Personal Growth'][i] == 1:
@@ -144,7 +145,7 @@ print("this is array Y=", arrayY)
 # print(len(arrayY))
 
 [chi2,pval] = sk.chi2(arrayX, arrayY)
-print("chi2 value for gender, state, category", chi2)
+print("chi2 value for gender, state, followers with category", chi2)
 print("these are the pvalues=", pval)
 
 z = np.concatenate((arrayX, arrayY), axis = 1)
@@ -153,17 +154,26 @@ np.random.shuffle(z)
 print("shuffled=",z)
 
 print("80 percent is at", int(0.8*len(z)))
-Xtrain = z[:int((.8*len(z))),:2]
-Ytrain = z[:int((.8*len(z))),2]
-Xtest = z[int(0.8*len(z)):,:2]
-Ytest = z[int(0.8*len(z)):,2]
+Xtrain = z[:int((.8*len(z))),:3]
+Ytrain = z[:int((.8*len(z))),3]
+Xtest = z[int(0.8*len(z)):,:3]
+Ytest = z[int(0.8*len(z)):,3]
 
 # decision tree
 tr = DecisionTreeClassifier()
 tr.fit(Xtrain, Ytrain)
+print("importances=",tr.feature_importances_)
 
 y_predict = tr.predict(Xtest)
 print(f"Accuracy score for Random Forest Classifier is: {accuracy_score(Ytest, y_predict)}")
+
+
+tr2 = LogisticRegression()
+tr2.fit(Xtrain, Ytrain)
+# print("importances =", tr2.feature_importances_)
+
+y_predict = tr2.predict(Xtest)
+print(f"Accuracy score for Logistic Regression Classifier is: {accuracy_score(Ytest, y_predict)}")
 
 # histogram
 # geocount = data.pivot_table(index=['tweet_state'], aggfunc='size')
@@ -179,6 +189,7 @@ for i in range(0, len(data)-1):
 # print(arr)
 n, bins, patches = plt.hist(x = arr, bins = np.arange(0, 51, step = 1), color = '#A737B5',
                             alpha = 0.7, rwidth = 0.8)
+
 plt.grid(axis= 'y', alpha = 0.75)
 plt.xlabel('State')
 plt.ylabel('frequency')
@@ -190,30 +201,30 @@ labels = ['AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN',
             'UT','VT', 'VA','WA','WV','WI','WY','DC']
 plt.xticks(np.arange(0, 51, step = 1), labels)
 plt.show()
-#
-# #divde the data by gender
-# arrW = np.zeros(51, dtype = int) #for women
-# arrM = np.zeros(51, dtype = int) #for men
-# for i in range(0, len(data)-1):
-#     if data.gender[i] == 0:
-#         x = data.tweet_state[i]
-#         arrW[x] = arrW[x] + 1
-#     if data.gender[i] == 1:
-#         x = data.tweet_state[i]
-#         arrM[x] = arrM[x] + 1
-# # print("w =", arrW)
-# # print("m =", arrM)
-# width = 0.5
-# ind = np.arange(51)
-# p1 = plt.bar(ind, arrM, width)
-# p2 = plt.bar(ind, arrW, width, bottom = arrM)
-# plt.ylabel('Tweet Frequency')
-# plt.xlabel('State')
-# plt.xticks(np.arange(0, 51, step = 1))
-# plt.legend((p1[0], p2[0]), ('Men', 'Women'))
-# plt.title("Tweet Frequency by State and Gender")
-# # plt.show()
-#
+
+#divde the data by gender
+arrW = np.zeros(51, dtype = int) #for women
+arrM = np.zeros(51, dtype = int) #for men
+for i in range(0, len(data)-1):
+    if data.gender[i] == 0:
+        x = data.tweet_state[i]
+        arrW[x] = arrW[x] + 1
+    if data.gender[i] == 1:
+        x = data.tweet_state[i]
+        arrM[x] = arrM[x] + 1
+# print("w =", arrW)
+# print("m =", arrM)
+width = 0.5
+ind = np.arange(51)
+p1 = plt.bar(ind, arrM, width)
+p2 = plt.bar(ind, arrW, width, bottom = arrM)
+plt.ylabel('Tweet Frequency')
+plt.xlabel('State')
+plt.xticks(np.arange(0, 51, step = 1))
+plt.legend((p1[0], p2[0]), ('Men', 'Women'))
+plt.title("Tweet Frequency by State and Gender")
+# plt.show()
+
 # # stacked bar plot for category
 PG = np.zeros(51, dtype = int) #for 'Personal Growth'
 H = np.zeros(51, dtype = int) #for 'Humor'
@@ -292,107 +303,61 @@ p11 = plt.bar(ind, E, width, bottom =  PG + H + HF + GS + RL + C + F + TM + R + 
 
 plt.ylabel('Tweet Frequency')
 plt.xlabel('State')
-plt.xticks(np.arange(0, 51, step = 1))
-plt.legend((p0[0],p1[0],p2[0],p3[0],p4[0],p5[0],p6[0],p7[0],p8[0], p9[0], p10[0], p11[0]), ('Health & Fitness', 'Humor', 'Personal Growth', 'Philanthropic', 'Recreation & Leisure', 'Career','Family/Friends/Relationships', 'Finance', 'Education/Training', 'Time Management/Organization' ), bbox_to_anchor=(1.05, 1), loc = 'upper left', borderaxespad = 0.)
+labels1 = ['AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN',
+            'IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','NE','NV','NH',
+            'NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI', 'SC','SD','TN','TX',
+            'UT','VT', 'VA','WA','WV','WI','WY','DC']
+plt.xticks(np.arange(0, 51, step = 1), labels1)
+plt.legend((p0[0],p1[0],p2[0],p3[0],p4[0],p5[0],p6[0],p7[0],p8[0], p9[0], p10[0], p11[0]), ('Health & Fitness', 'Humor', 'Personal Growth', 'Philanthropic', 'Recreation & Leisure', 'Career','Family/Friends/Relationships', 'Finance', 'Education/Training', 'Time Management/Organization' ), bbox_to_anchor=(1.25, 1), loc = 'upper right', borderaxespad = 0.)
 plt.title("Tweet Frequency by State and Category")
 plt.show()
 
-# ## here you are adding the number of followers to the excel
-# CONSUMER_KEY = 'n4qNDyH25RLTRW1wLlKa4lLU6'
-# CONSUMER_SECRET = 'OIN2Vi1Wdq8mP8QLFaiN6sGvc2LeVHLdJMECVEiyrUk9j8z9zD'
-# ACCESS_TOKEN = '1171636288086315009-3uesxkcQ5TKbijuUaITb05yOr8fu51'
-# ACCESS_TOKEN_SECRET = 'aY654202Zk9LCJ01x9zcTfqarMpbybp5we5cbKUDZQxEG'
-# auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
-# auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 
-# api = tweepy.API(auth)
+#trying to do a plot with a table connected to the bottom
+# categories = np.concatenate((HF, H, PG, P, RL, C, FF, F, ET, TM))
+categories = np.array([PG, H, HF, GS, RL, C, F, TM, R, D, FF, E])# states = categories.transpose()
+print("categories matrix=",categories)
+# print("HF=", HF)
+# print("new=",categories[1,])
+columns = ('AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY', 'DC')
+rows = ('PG', 'H', 'HF', 'GS', 'RL', 'C', 'F', 'TM', 'R', 'D', 'FF', 'E')
 
-# names = ["Reesesking1","Stacyloohoo"]
+values = np.arange(0, 1000, 100)
+value_increment = 2000
 
-# def followercount(names):
-#     for name in names:
-#         try:
-#             user = api.get_user(name)
-#             # ageTwitterAccount = user.created_at
-#             try:
-#                 followers_count =  user.followers_count
-#             except:
-#                 time.sleep(60*15)
-#                 followers_count = user.followers_count
-#                 # friends_count = user.friends_count
-#             timezone = user.time_zone
-#             print(name)
-#             print(ageTwitterAccount)
-#             print(followers_count)
-#             print(friends_count)
-#             print(timezone)
-#             return followers_count
-#         except:
-#             return 0
-#
-#
-# followerlist = []
-# friendlist = []
-# name = []
-#
-# for i in range(0, len(data)-1):
-#     name.append(data.name[i + 1])
-# (', '.join('"' + i + '"' for i in name))
-# # print(name)
-#
-# for i in range(0, len(name)-1):
-#     followers, friends = followercount(name)
-#     followerlist.append(followers)
-#     friendlist.append(friends)
-# # error: it says that the user is not found -- maybe they
-# # deleted their account? what do I do now
-#
-#
-#
-# #trying to do a plot with a table connected to the bottom
-# # categories = np.concatenate((HF, H, PG, P, RL, C, FF, F, ET, TM))
-# categories = [HF, H, PG, P, RL, C, FF, F, ET, TM]
-# # states = categories.transpose()
-# print("HF=",HF)
-# # print("new=",categories[1,])
-# columns = ('AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY')
-# rows = ('HF', 'H', 'PG', 'P', 'RL', 'C', 'FF', 'F', 'ET', 'TM')
-#
-# values = np.arange(0, 10000, 1000)
-# value_increment = 10000
-#
-# colors = plt.cm.BuPu(np.linspace(0, 0.5, len(rows)))
-# n_rows = len(data)
-#
-# index = np.arange(len(columns)) + 0.3
-# bar_width = 0.4
-#
-# # initialize  the vertical-offset for the stacked bar chart
-# y_offset = np.zeros(len(columns))
-#
-# #Plot bars and create text lables for the table
-# cell_text = []
-# for row in range(n_rows):
-#     plt.bar(index, data[row], bar_width, bottom=y_offset, color=colors[row])
-#     y_offset = y_offset + data[row]
-#     cell_text.append(['%1.1f' % (x / 1000.0) for x in y_offset])
-# # Reverse colors and text labels to display the last value at the top.
-# colors = colors[::-1]
-# cell_text.reverse()
-#
-# # Add a table at the bottom of the axes
-# the_table = plt.table(cellText=cell_text,
-#                       rowLabels=rows,
-#                       rowColours=colors,
-#                       colLabels=columns,
-#                       loc='bottom')
-#
-# # Adjust layout to make room for the table:
-# plt.subplots_adjust(left=0.2, bottom=0.2)
-#
-# plt.ylabel("Loss in ${0}'s".format(value_increment))
-# plt.yticks(values * value_increment, ['%d' % val for val in values])
-# plt.xticks([])
-# plt.title('Loss by Disaster')
-#
-# # plt.show()
+colors = plt.cm.BuPu(np.linspace(0, 0.5, len(rows)))
+n_rows = len(categories)
+# print("first=", categories[1])
+
+index = np.arange(len(columns)) + 0.3
+bar_width = 0.4
+
+# initialize the vertical-offset for the stacked bar chart
+y_offset = np.zeros(len(columns))
+
+#Plot bars and create text lables for the table
+cell_text = []
+for row in range(n_rows):
+    plt.bar(index, categories[row], bar_width, bottom=y_offset, color=colors[row])
+    y_offset = y_offset + categories[row]
+    cell_text.append(['%1.1f' % (x / 1000.0) for x in y_offset])
+# Reverse colors and text labels to display the last value at the top.
+colors = colors[::-1]
+cell_text.reverse()
+
+# Add a table at the bottom of the axes
+the_table = plt.table(cellText=cell_text,
+                      rowLabels=rows,
+                      rowColours=colors,
+                      colLabels=columns,
+                      loc='bottom')
+
+# Adjust layout to make room for the table:
+plt.subplots_adjust(left=0.2, bottom=0.2)
+
+plt.ylabel("Tweet Frequency".format(value_increment))
+plt.yticks(values * value_increment, ['%d' % val for val in values])
+plt.xticks([])
+plt.title('Tweets by State')
+
+plt.show()
