@@ -14,23 +14,28 @@ warnings.filterwarnings("ignore")
 X = np.load('arrays/X.npy', allow_pickle=True)
 Y = np.load('arrays/Y.npy',allow_pickle=True)
 
-
-arr  = X[:,1]
-print(arr)
-n, bins, patches = plt.hist(x = arr, bins = np.arange(0, 51, step = 1), color = '#A737B5',
-                            alpha = 0.7, rwidth = 0.8)
-
-plt.grid(axis= 'y', alpha = 0.75)
-plt.xlabel('State')
-plt.ylabel('frequency')
-# plt.xticks(np.arange(0, 51, step = 1))
-plt.title("Tweet Frequency by State")
 labels = ['AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN',
             'IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH',
             'NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI', 'SC','SD','TN','TX',
             'UT','VT', 'VA','WA','WV','WI','WY','DC']
-plt.xticks(np.arange(0, 51, step = 1), labels)
-plt.show()
+
+# ind = np.arange(51)
+# arr  = X[:,1]
+
+# print(len(ind),len(arr))
+
+
+# print(arr)
+# # n, bins, patches = plt.hist(x = arr, color = '#A737B5',
+# #                             alpha = 0.7, rwidth = 0.8)
+# plt.bar(ind, arr, 0.5)
+# # plt.grid(axis= 'y', alpha = 0.75)
+# plt.xlabel('State')
+# plt.ylabel('frequency')
+# # plt.xticks(np.arange(0, 51, step = 1))
+# plt.title("Tweet Frequency by State")
+# plt.xticks(np.arange(0, 51, step = 1), labels)
+# plt.show()
 
 #divde the data by gender
 arrW = np.zeros(51, dtype = int) #for women
@@ -50,10 +55,10 @@ p1 = plt.bar(ind, arrM, width)
 p2 = plt.bar(ind, arrW, width, bottom = arrM)
 plt.ylabel('Tweet Frequency')
 plt.xlabel('State')
-plt.xticks(np.arange(0, 51, step = 1))
+plt.xticks(np.arange(0, 51, step = 1), labels)
 plt.legend((p1[0], p2[0]), ('Men', 'Women'))
 plt.title("Tweet Frequency by State and Gender")
-# plt.show()
+plt.show()
 
 # # stacked bar plot for category
 
