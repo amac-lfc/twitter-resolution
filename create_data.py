@@ -101,7 +101,7 @@ for i in range(0, len(data)-2):
     arrayX[i, 2] = int(followdata.followers[i+1])
     # arrayX[i, 2] = data.tweet_region[i]
 
-print("gender, state, followers \n", arrayX)
+# print("gender, state, followers \n", arrayX)
 
 arrayY = np.zeros([len(data), 1], 'i')
 
@@ -132,7 +132,7 @@ for i in range(0, len(data)-1):
          arrayY[i, 0] = 11
      elif data['Omit'][i] == 1:
         arrayY[i, 0] = 12
-print("this is array Y=", arrayY)
+# print("this is array Y=", arrayY)
 
 np.save('arrays/X', arrayX,allow_pickle=True)
 np.save('arrays/Y', arrayY,allow_pickle=True)
@@ -155,7 +155,7 @@ R = np.zeros(51, dtype = int) #for 'Time Management'
 D = np.zeros(51, dtype = int) #for 'Time Management'
 
 
-print(data['Good Samaritan '][0:10])
+# print(data['Good Samaritan '][0:10])
 # convert the categories to integer values
 for i in range(0, len(data)-1):
      if data['Personal Growth'][i] == 1:
@@ -207,3 +207,32 @@ np.save('arrays/E', E, allow_pickle=True)
 np.save('arrays/TM', TM, allow_pickle=True)
 np.save('arrays/R', R, allow_pickle=True)
 np.save('arrays/D', D, allow_pickle=True)
+
+
+only_pg = data['Personal Growth'].as_matrix()
+only_h = data['Humor'].as_matrix()
+only_hf = data['Health and Fitness'].as_matrix()
+only_gs = data['Good Samaritan '].as_matrix()
+only_rl = data['Rec and Leisure'].as_matrix()
+only_c = data['Career'].as_matrix()
+only_ff = data['Friends and Family'].as_matrix()
+only_f = data['Finance'].as_matrix()
+only_e = data['Education'].as_matrix()
+only_tm = data['Time Management'].as_matrix()
+only_r = data['Religion'].as_matrix()
+only_d = data['Dating'].as_matrix()
+print(only_hf)
+print(only_h)
+
+np.save('arrays/only_pg', only_pg, allow_pickle=True)
+np.save('arrays/only_h', only_h, allow_pickle=True )
+np.save('arrays/only_hf', only_hf, allow_pickle=True)
+np.save('arrays/only_gs', only_gs, allow_pickle=True)
+np.save('arrays/only_rl', only_rl, allow_pickle=True)
+np.save('arrays/only_c', only_c, allow_pickle=True)
+np.save('arrays/only_ff', only_ff, allow_pickle=True)
+np.save('arrays/only_f', only_f, allow_pickle=True)
+np.save('arrays/only_e', only_e, allow_pickle=True)
+np.save('arrays/only_tm', only_tm, allow_pickle=True)
+np.save('arrays/only_r', only_r, allow_pickle=True)
+np.save('arrays/only_d', only_d, allow_pickle=True)
