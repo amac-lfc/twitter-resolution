@@ -23,10 +23,10 @@ n, bins, patches = plt.hist(x = arr, bins = np.arange(0, 51, step = 1), color = 
 plt.grid(axis= 'y', alpha = 0.75)
 plt.xlabel('State')
 plt.ylabel('frequency')
-plt.xticks(np.arange(0, 51, step = 1))
+# plt.xticks(np.arange(0, 51, step = 1))
 plt.title("Tweet Frequency by State")
 labels = ['AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN',
-            'IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','NE','NV','NH',
+            'IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH',
             'NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI', 'SC','SD','TN','TX',
             'UT','VT', 'VA','WA','WV','WI','WY','DC']
 plt.xticks(np.arange(0, 51, step = 1), labels)
@@ -93,7 +93,7 @@ p11 = plt.bar(ind, E, width, bottom =  PG + H + HF + GS + RL + C + F + TM + R + 
 plt.ylabel('Tweet Frequency')
 plt.xlabel('State')
 labels1 = ['AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN',
-            'IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','NE','NV','NH',
+            'IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH',
             'NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI', 'SC','SD','TN','TX',
             'UT','VT', 'VA','WA','WV','WI','WY','DC']
 plt.xticks(np.arange(0, 51, step = 1), labels1)
