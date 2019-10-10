@@ -9,7 +9,10 @@ from sklearn.metrics import accuracy_score
 import matplotlib.pyplot as plt
 import warnings
 from sklearn.linear_model import LogisticRegression
-from yellowbrick.classifier import ConfusionMatrix
+# from yellowbrick.classifier import ConfusionMatrix
+from collections import Counter
+from sklearn.datasets import make_classification
+from imblearn.over_sampling import SMOTE
 warnings.filterwarnings("ignore")
 # equivalents from matplotlib
 # data = pd.read_csv("dfe.csv",encoding = "ISO-8859-1")
@@ -59,8 +62,18 @@ tr2 = LogisticRegression()
 # print(f"Accuracy score for Logistic Regression Classifier is: {accuracy_score(Ytest, y_predict)}")
 # print("importances=",tr2.coef_)
 
-#confusion ConfusionMatrix
-cm = ConfusionMatrix(tr2, classes=[0,1])
-cm.fit(Xtrain, Ytrain)
-cm.score(Xtest, Ytest)
-cm.show()
+#confusion ConfusionMatrix only commented bc lab doesnt have yellow brick
+# cm = ConfusionMatrix(tr2, classes=[0,1])
+# cm.fit(Xtrain, Ytrain)
+# cm.score(Xtest, Ytest)
+# cm.show()
+
+# SMOTE
+
+c1, c2 = make_classification(n_classes=2, class_sep=2, weights=[0.1, 0.9],
+                             n_informative=3, n_redundant=1, flip_y=0,
+                             n_features=20, n_clusters_per_class=1, n_samples=1000, random_state=10)
+print('Original dataset shape %s' % Counter(c2))
+sm = SMOTE(random_state=42)
+c1_res, c2_res = sm.fit_resample(c1, c2)
+print('Resampled dataset shape %s' % Counter(c2_res))
