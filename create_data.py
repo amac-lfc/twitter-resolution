@@ -209,18 +209,18 @@ np.save('arrays/R', R, allow_pickle=True)
 np.save('arrays/D', D, allow_pickle=True)
 
 
-only_pg = data['Personal Growth'].as_matrix()
-only_h = data['Humor'].as_matrix()
-only_hf = data['Health and Fitness'].as_matrix()
-only_gs = data['Good Samaritan '].as_matrix()
-only_rl = data['Rec and Leisure'].as_matrix()
-only_c = data['Career'].as_matrix()
-only_ff = data['Friends and Family'].as_matrix()
-only_f = data['Finance'].as_matrix()
-only_e = data['Education'].as_matrix()
-only_tm = data['Time Management'].as_matrix()
-only_r = data['Religion'].as_matrix()
-only_d = data['Dating'].as_matrix()
+only_pg = data['Personal Growth'].values
+only_h = data['Humor'].values
+only_hf = data['Health and Fitness'].values
+only_gs = data['Good Samaritan '].values
+only_rl = data['Rec and Leisure'].values
+only_c = data['Career'].values
+only_ff = data['Friends and Family'].values
+only_f = data['Finance'].values
+only_e = data['Education'].values
+only_tm = data['Time Management'].values
+only_r = data['Religion'].values
+only_d = data['Dating'].values
 print(only_hf)
 print(only_h)
 
