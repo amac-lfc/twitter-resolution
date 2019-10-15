@@ -35,7 +35,11 @@ arrayX = np.load('arrays/X.npy', allow_pickle=True)
 arrayY = np.load('arrays/Y.npy',allow_pickle=True)
 # arrayY = np.load('arrays/only_pg.npy', allow_pickle=True)
 # arrayY = np.transpose(arrayY)
-arrayY[arrayY!=0]=1
+Topic = 1
+arrayY[arrayY!=Topic]=-1
+arrayY[arrayY==Topic] = 1
+arrayY[arrayY==-1] = 0
+
 # index = np.where(arrayX[:,2]==0)
 # arrayX = arrayX[index]
 # arrayY = arrayY[index]
