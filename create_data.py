@@ -22,7 +22,6 @@ print(followdata.columns.values)
 print("data = ", data.columns.values)
 
 
-
 # code the state strings into integers
 data.tweet_state[data.tweet_state == 'AL'] = 0
 data.tweet_state[data.tweet_state == 'AK'] = 1
@@ -94,15 +93,21 @@ data.tweet_region[data.tweet_region == 'Midwest'] = 3
 # chi square test
 # PCA test
 # reading about decision trees
-arrayX = np.zeros([len(data), 3],'i')
+for i in range(len(followdata)-1):
+    if followdata['created in'][i+1] != 0:
+        followdata['created in'][i+1] = followdata['created in'][i+1][:4]
+
+
+arrayX = np.zeros([len(data), 4],'i')
 for i in range(0, len(data)-2):
     arrayX[i, 0] = data.gender[i+1]
     arrayX[i, 1] = data.tweet_state[i+1]
     arrayX[i, 2] = int(followdata.followers[i+1])
-    # arrayX[i, 2] = data.tweet_region[i]
+    arrayX[i, 3] = int(followdata['created in'][i+1])
+
+
 
 # print("gender, state, followers \n", arrayX)
-
 arrayY = np.zeros([len(data), 1], 'i')
 
 for i in range(0, len(data)-1):
@@ -133,10 +138,8 @@ for i in range(0, len(data)-1):
      elif data['Omit'][i] == 1:
         arrayY[i, 0] = 12
 # print("this is array Y=", arrayY)
-
 np.save('arrays/X', arrayX,allow_pickle=True)
 np.save('arrays/Y', arrayY,allow_pickle=True)
-
 
 # # stacked bar plot for category
 PG = np.zeros(51, dtype = int) #for 'Personal Growth'
