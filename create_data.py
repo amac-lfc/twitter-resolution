@@ -90,9 +90,8 @@ data.tweet_region[data.tweet_region == 'Midwest'] = 3
 # x[i, 1]; where they tweeted 0, 49 states ,no more states
 # x[i, 2]; user time zone 0 to 23, no more time zone
 # x[i, 3]; tweet region
-# chi square test
-# PCA test
-# reading about decision trees
+
+
 for i in range(len(followdata)-1):
     if followdata['created in'][i+1] != 0:
         followdata['created in'][i+1] = followdata['created in'][i+1][:4]
@@ -239,3 +238,111 @@ np.save('arrays/only_e', only_e, allow_pickle=True)
 np.save('arrays/only_tm', only_tm, allow_pickle=True)
 np.save('arrays/only_r', only_r, allow_pickle=True)
 np.save('arrays/only_d', only_d, allow_pickle=True)
+
+# All language attributes in X and gender in Y ######################333
+langdata = pd.read_excel('LIWC2015Results.xlsx')
+
+LX = np.zeros([len(langdata), 90],'i')
+
+for i in range(0, len(langdata)-2):
+    LX[i, 0] = langdata.WC[i+1]
+    LX[i, 1] = langdata.Analytic[i+1]
+    LX[i, 2] = langdata.Clout[i+1]
+    LX[i, 3] = langdata.Authentic[i+1]
+    LX[i, 4] = langdata.Tone[i+1]
+    LX[i, 5] = langdata.function[i+1]
+    LX[i, 6] = langdata.pronoun[i+1]
+    LX[i, 7] = langdata.ppron[i+1]
+    LX[i, 8] = langdata.i[i+1]
+    LX[i, 9] = langdata.we[i+1]
+    LX[i, 10] = langdata.you[i+1]
+    LX[i, 11] = langdata.shehe[i+1]
+    LX[i, 12] = langdata.they[i+1]
+    LX[i, 13] = langdata.ipron[i+1]
+    LX[i, 14] = langdata.article[i+1]
+    LX[i, 15] = langdata.prep[i+1]
+    LX[i, 16] = langdata.auxverb[i+1]
+    LX[i, 17] = langdata.adverb[i+1]
+    LX[i, 18] = langdata.conj[i+1]
+    LX[i, 19] = langdata.negate[i+1]
+    LX[i, 20] = langdata.verb[i+1]
+    LX[i, 21] = langdata.adj[i+1]
+    LX[i, 22] = langdata.compare[i+1]
+    LX[i, 23] = langdata.interrog[i+1]
+    LX[i, 24] = langdata.number[i+1]
+    LX[i, 25] = langdata.quant[i+1]
+    LX[i, 26] = langdata.affect[i+1]
+    LX[i, 27] = langdata.posemo[i+1]
+    LX[i, 28] = langdata.negemo[i+1]
+    LX[i, 29] = langdata.anx[i+1]
+    LX[i, 30] = langdata.anger[i+1]
+    LX[i, 31] = langdata.sad[i+1]
+    LX[i, 32] = langdata.social[i+1]
+    LX[i, 33] = langdata.family[i+1]
+    LX[i, 34] = langdata.friend[i+1]
+    LX[i, 35] = langdata.female[i+1]
+    LX[i, 36] = langdata.male[i+1]
+    LX[i, 37] = langdata.cogproc[i+1]
+    LX[i, 38] = langdata.insight[i+1]
+    LX[i, 39] = langdata.cause[i+1]
+    LX[i, 40] = langdata.discrep[i+1]
+    LX[i, 41] = langdata.tentat[i+1]
+    LX[i, 42] = langdata.certain[i+1]
+    LX[i, 43] = langdata.differ[i+1]
+    LX[i, 44] = langdata.percept[i+1]
+    LX[i, 45] = langdata.see[i+1]
+    LX[i, 46] = langdata.hear[i+1]
+    LX[i, 47] = langdata.feel[i+1]
+    LX[i, 48] = langdata.bio[i+1]
+    LX[i, 49] = langdata.body[i+1]
+    LX[i, 50] = langdata.health[i+1]
+    LX[i, 51] = langdata.sexual[i+1]
+    LX[i, 52] = langdata.ingest[i+1]
+    LX[i, 53] = langdata.drives[i+1]
+    LX[i, 54] = langdata.affiliation[i+1]
+    LX[i, 55] = langdata.achieve[i+1]
+    LX[i, 56] = langdata.power[i+1]
+    LX[i, 57] = langdata.reward[i+1]
+    LX[i, 58] = langdata.risk[i+1]
+    LX[i, 59] = langdata.focuspast[i+1]
+    LX[i, 60] = langdata.focuspresent[i+1]
+    LX[i, 61] = langdata.focusfuture[i+1]
+    LX[i, 62] = langdata.relativ[i+1]
+    LX[i, 63] = langdata.motion[i+1]
+    LX[i, 64] = langdata.space[i+1]
+    LX[i, 65] = langdata.time[i+1]
+    LX[i, 66] = langdata.work[i+1]
+    LX[i, 67] = langdata.leisure[i+1]
+    LX[i, 68] = langdata.home[i+1]
+    LX[i, 69] = langdata.money[i+1]
+    LX[i, 70] = langdata.relig[i+1]
+    LX[i, 71] = langdata.death[i+1]
+    LX[i, 72] = langdata.informal[i+1]
+    LX[i, 73] = langdata.swear[i+1]
+    LX[i, 74] = langdata.netspeak[i+1]
+    LX[i, 75] = langdata.assent[i+1]
+    LX[i, 76] = langdata.nonflu[i+1]
+    LX[i, 77] = langdata.filler[i+1]
+    LX[i, 78] = langdata.AllPunc[i+1]
+    LX[i, 79] = langdata.Period[i+1]
+    LX[i, 80] = langdata.Comma[i+1]
+    LX[i, 81] = langdata.Colon[i+1]
+    LX[i, 82] = langdata.SemiC[i+1]
+    LX[i, 83] = langdata.QMark[i+1]
+    LX[i, 84] = langdata.Exclam[i+1]
+    LX[i, 85] = langdata.Dash[i+1]
+    LX[i, 86] = langdata.Quote[i+1]
+    LX[i, 87] = langdata.Apostro[i+1]
+    LX[i, 88] = langdata.Parenth[i+1]
+    LX[i, 89] = langdata.OtherP[i+1]
+
+LY = np.zeros([len(langdata)],'i')
+for i in range(0, len(langdata)-2):
+    if langdata.gender[i] == 'female':
+        LY[i] = 0
+    if langdata.gender[i] == 'male':
+        LY[i] = 1
+
+
+np.save('arrays/LX', arrayX,allow_pickle=True)
+np.save('arrays/LY', arrayY,allow_pickle=True)
