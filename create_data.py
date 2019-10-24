@@ -344,5 +344,5 @@ for i in range(0, len(langdata)-2):
         LY[i] = 1
 
 
-np.save('arrays/LX', arrayX,allow_pickle=True)
-np.save('arrays/LY', arrayY,allow_pickle=True)
+np.save('arrays/LX', LX,allow_pickle=True)
+np.save('arrays/LY', LY,allow_pickle=True)
