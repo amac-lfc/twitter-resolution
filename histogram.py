@@ -105,3 +105,40 @@ plt.xticks(np.arange(0, 51, step = 1), labels1)
 plt.legend((p0[0],p1[0],p2[0],p3[0],p4[0],p5[0],p6[0],p7[0],p8[0], p9[0], p10[0], p11[0]), ('Health & Fitness', 'Humor', 'Personal Growth', 'Philanthropic', 'Recreation & Leisure', 'Career','Family/Friends/Relationships', 'Finance', 'Education/Training', 'Time Management/Organization' ), bbox_to_anchor=(1.25, 1), loc = 'upper right', borderaxespad = 0.)
 plt.title("Tweet Frequency by State and Category")
 plt.show()
+
+###################### bar plot per category ###########################
+# just change the array in rects1
+
+x = np.arange(len(labels1))  # the label locations
+width = 0.35  # the width of the bars
+
+fig, ax = plt.subplots()
+rects1 = ax.bar(x, RL, width, label='RL')
+# rects2 = ax.bar(x + width/2, women_means, width, label='Women')
+
+# Add some text for labels, title and custom x-axis tick labels, etc.
+ax.set_ylabel('Tweet Frequency')
+ax.set_xlabel('State')
+ax.set_title('Relax/Leisure Tweet Frequency by State')
+ax.set_xticks(x)
+ax.set_xticklabels(labels1)
+ax.legend()
+
+
+def autolabel(rects):
+    """Attach a text label above each bar in *rects*, displaying its height."""
+    for rect in rects:
+        height = rect.get_height()
+        ax.annotate('{}'.format(height),
+                    xy=(rect.get_x() + rect.get_width() / 2, height),
+                    xytext=(0, 3),  # 3 points vertical offset
+                    textcoords="offset points",
+                    ha='center', va='bottom')
+
+
+autolabel(rects1)
+# autolabel(rects2)
+
+fig.tight_layout()
+
+plt.show()
