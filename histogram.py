@@ -113,13 +113,13 @@ x = np.arange(len(labels1))  # the label locations
 width = 0.35  # the width of the bars
 
 fig, ax = plt.subplots()
-rects1 = ax.bar(x, RL, width, label='RL')
+rects1 = ax.bar(x, PG, width, label='PG')
 # rects2 = ax.bar(x + width/2, women_means, width, label='Women')
 
 # Add some text for labels, title and custom x-axis tick labels, etc.
 ax.set_ylabel('Tweet Frequency')
 ax.set_xlabel('State')
-ax.set_title('Relax/Leisure Tweet Frequency by State')
+ax.set_title('Personal Growth Tweet Frequency by State')
 ax.set_xticks(x)
 ax.set_xticklabels(labels1)
 ax.legend()

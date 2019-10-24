@@ -78,6 +78,14 @@ data.tweet_state[data.tweet_state == 'DC'] = 50
 data.gender[data.gender == 'female'] = 0
 data.gender[data.gender == 'male'] = 1
 
+
+malecount = 0
+for i in range(len(data)):
+    if data.gender[i] == 1:
+        malecount = malecount + 1
+percentm = malecount/len(data)
+print("percent male =", percentm)
+
 data.tweet_region[data.tweet_region == 'West'] = 0
 data.tweet_region[data.tweet_region == 'Northeast'] = 1
 data.tweet_region[data.tweet_region == 'South'] = 2
