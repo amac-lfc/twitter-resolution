@@ -83,20 +83,21 @@ print("arrY=", arrayY.shape)
 
 z = np.concatenate((arrayX, arrayY[:,None]), axis = 1)
 print("adjoined=",z)
+z = z[~pd.isnull(z)]
 np.random.shuffle(z)
 print("shuffled=",z)
 
 print("80 percent is at", int(0.8*len(z)))
-Xtrain = z[:int((.8*len(z))),:9]
-Ytrain = z[:int((.8*len(z))),9]
-Xtest = z[int(0.8*len(z)):,:9]
-Ytest = z[int(0.8*len(z)):,9]
-Ytrain = Ytrain.astype(float)
-Xtrain = Xtrain.astype(float)
-Ytest = Ytest.astype(float)
-Xtest = Xtest.astype(float)
-Ytrain = np.around(Ytrain, decimals =3) #this is to remove floats
-Ytrain = Ytrain * 1000 # this is to remove floats
+Xtrain = z[:int((.8*len(z))),:39279]
+Ytrain = z[:int((.8*len(z))),39279]
+Xtest = z[int(0.8*len(z)):,:39279]
+Ytest = z[int(0.8*len(z)):,39279]
+Ytrain = Ytrain.astype(int)
+Xtrain = Xtrain.astype(double)
+Ytest = Ytest.astype(int)
+Xtest = Xtest.astype(double)
+# Ytrain = np.around(Ytrain, decimals =3) #this is to remove floats
+# Ytrain = Ytrain * 1000 # this is to remove floats
 print("Xtrain = ", Xtrain)
 print("Ytrain = ", Ytrain)
 Ytrain.astype(int) #this is to change type to int for the bincount
