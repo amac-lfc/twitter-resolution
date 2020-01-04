@@ -9,7 +9,8 @@
 
 ## Twitter Resolution Histogram
 #### All of this code can be found in histogram.py
-'''python
+~~~~~~~~~~~~~{.python}
+
 import pandas as pd
 from pandas import ExcelWriter
 from pandas import ExcelFile
@@ -137,7 +138,7 @@ fig.tight_layout()
 
 plt.show()
 
-'''
+~~~~~~~~~~~~~~~
 
 ## Classifiers
 
