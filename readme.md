@@ -25,7 +25,7 @@ from sklearn.linear_model import LogisticRegression
 warnings.filterwarnings("ignore")
 ~~~~~~~~~~~~~~
 
-## 1.a) Twitter Resolution Histogram
+## 1a) Twitter Resolution Histogram
 #### Code can be found in histogram.py
 #### Initially, you may want to look at the data in various ways. In this first plot we look at Tweet Frequency by State and Gender, which gives us an idea of which states tweet the most, and whether one gender or the other is more dominant on Twitter.
 ![alt text](https://github.com/lfc-math-cs/twitter-resolution/blob/master/TweetFreqByStateGender.png)
@@ -37,7 +37,7 @@ warnings.filterwarnings("ignore")
 
 ![alt text](https://github.com/lfc-math-cs/twitter-resolution/blob/master/SingleCategoryByState.png)
 
-## Classifiers
+## 1c) Classifiers
 #### Code can be found in classifier.py
 #### In this portion I will run several classifiers to see which best predicts the tweet category. The classifiers used are SMOTE, Decision Tree, Logistic Regression, Random Forest Classifier, MLP Classifier, AdaBoost Classifier, Quadratic Discriminant Analysis, Gaussian NB, SVC Classifier, and KNeighbors Classifier.
 
@@ -60,7 +60,7 @@ cm.show()
 
 ![alt text](https://github.com/lfc-math-cs/twitter-resolution/blob/master/DecisionTreeCfsnMatrix.png)
 
-
+#### From this confusion matrix, we can see the number of times that the classifier guessed correct. In this case, 636/985 is the fraction of times that the classifier guessed the actual value, which means it is certainly better than random guessing.
 
 # Part 2: The Analysis of Patients and the Diagnosis of Alzheimer's disease
 #### Code can be found in geoclassifiers.py
