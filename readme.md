@@ -11,7 +11,6 @@
 ####  a. Classifiers
 ## Install all necessary packages
 ~~~~~~~~~~~~~{.python}
-
 import pandas as pd
 from pandas import ExcelWriter
 from pandas import ExcelFile
@@ -39,6 +38,29 @@ warnings.filterwarnings("ignore")
 ![alt text](https://github.com/lfc-math-cs/twitter-resolution/blob/master/SingleCategoryByState.png)
 
 ## Classifiers
+#### Code can be found in classifier.py
+#### In this portion I will run several classifiers to see which best predicts the tweet category. The classifiers used are SMOTE, Decision Tree, Logistic Regression, Random Forest Classifier, MLP Classifier, AdaBoost Classifier, Quadratic Discriminant Analysis, Gaussian NB, SVC Classifier, and KNeighbors Classifier.
+
+#### For each classifier, I trained and fit the data, and then I created the Confusion matrix. Decision Tree Classifier shown as an example.
+
+~~~~{.python}
+tr = DecisionTreeClassifier()
+tr.fit(Xtrain, Ytrain)
+y_predict = tr.predict(Xtest)
+print(f"Accuracy score for Decision Tree Classifier is: {accuracy_score(Ytest, y_predict)}")
+print("DT importances=",tr.feature_importances_)
+
+cm = ConfusionMatrix(tr, classes=[0,1])
+cm.fit(Xtrain, Ytrain)
+cm.score(Xtest, Ytest)
+cm.show()
+~~~~
+
+## Decision Tree Classifier
+
+![alt text](https://github.com/lfc-math-cs/twitter-resolution/blob/master/DecisionTreeCfsnMatrix.png)
+
+
 
 # Part 2: The Analysis of Patients and the Diagnosis of Alzheimer's disease
 #### Code can be found in geoclassifiers.py
