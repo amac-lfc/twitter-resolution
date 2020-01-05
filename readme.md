@@ -41,3 +41,4 @@ warnings.filterwarnings("ignore")
 ## Classifiers
 
 # Part 2: The Analysis of Patients and the Diagnosis of Alzheimer's disease
+#### Code can be found in geoclassifiers.py
