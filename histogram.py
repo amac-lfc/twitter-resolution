@@ -19,24 +19,6 @@ labels = ['AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN',
             'NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI', 'SC','SD','TN','TX',
             'UT','VT', 'VA','WA','WV','WI','WY','DC']
 
-# ind = np.arange(51)
-# arr  = X[:,1]
-
-# print(len(ind),len(arr))
-
-
-# print(arr)
-# # n, bins, patches = plt.hist(x = arr, color = '#A737B5',
-# #                             alpha = 0.7, rwidth = 0.8)
-# plt.bar(ind, arr, 0.5)
-# # plt.grid(axis= 'y', alpha = 0.75)
-# plt.xlabel('State')
-# plt.ylabel('frequency')
-# # plt.xticks(np.arange(0, 51, step = 1))
-# plt.title("Tweet Frequency by State")
-# plt.xticks(np.arange(0, 51, step = 1), labels)
-# plt.show()
-
 #divde the data by gender
 arrW = np.zeros(51, dtype = int) #for women
 arrM = np.zeros(51, dtype = int) #for men

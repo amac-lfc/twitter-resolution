@@ -1,4 +1,7 @@
-# Independent Project
+# Part 1: The Analysis of New Year's Resolutions on Twitter
+
+#### This project is conducted using data from data world. The goal of this project is to use Machine Learning on a dataset containing Tweets of New Years Resolutions and to use various characteristics such as State, Gender, Followers, and Language Quantifiers in order to predict the Category of the Tweet.
+
 ## Outline
 #### 1.Twitter Resolution Data
 ####  a. Histogram
@@ -37,4 +40,4 @@ warnings.filterwarnings("ignore")
 
 ## Classifiers
 
-## Alzheimer's dataset
+# Part 2: The Analysis of Patients and the Diagnosis of Alzheimer's disease
